@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Build transmon/donor.html — THE DONOR · As · P · Sb · Bi. The group-V dopant atom is the hinge
+between classical CPUs and quantum hardware: the SAME atom that dopes the transistor channels your
+laptop runs inference on, implanted single-atom instead of by the billion, becomes a qubit. Covers:
+the donor family (P/As/Sb/Bi — Z, nuclear spin, ionization level, CPU role, qubit role); the CHANNEL
+& the GAP (the classical FET — where inference physically runs — vs the transmon, which is a
+resonator, not a channel); the single-donor qubit (Kane) and the nuclear-spin ladder ½→3/2→7/2→9/2;
+the MOTT CEILING (dilute donor = qubit, dense donor = wire) with a live doping slider; and the
+straight answer to 'is that where the inference happens?' Fully cited. Cryo-violet aesthetic to match
+the transmon universe. NO ACI minted (deterministic physics, per the repo's standing line)."""
+import os, html, sys
+sys.stdout.reconfigure(encoding="utf-8")
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+CITES = {
+ "kane1998":  ("Kane, 'A silicon-based nuclear spin quantum computer,' Nature 393, 133 (1998) — the donor-qubit proposal: a single ³¹P atom in ²⁸Si, its nuclear spin the qubit, gated through the hyperfine interaction.", "https://www.nature.com/articles/30156"),
+ "pla2012":   ("Pla, Tan, Dehollain, Lim, Morton, Jamieson, Dzurak & Morello, 'A single-atom electron spin qubit in silicon,' Nature 489, 541 (2012) — Kane's single donor, actually built and controlled (UNSW Morello group); the nuclear-spin qubit followed in Nature 496 (2013).", "https://www.nature.com/articles/nature11449"),
+ "asaad2020": ("Asaad, Mourik, Joecker, Morello et al., 'Coherent electrical control of a single high-spin nucleus in silicon,' Nature 579, 205 (2020) — a single ¹²³Sb antimony donor, nuclear spin 7/2: an eight-level QUDIT in silicon.", "https://www.nature.com/articles/s41586-020-2057-7"),
+ "rosenbaum1980":("Rosenbaum, Andres, Thomas & Bhatt, 'Sharp Metal-Insulator Transition in a Random Solid,' Phys. Rev. Lett. 45, 1723 (1980) — Si:P crosses the Mott metal–insulator transition near n_c ≈ 3.7×10¹⁸ cm⁻³ as donors are packed denser.", "https://doi.org/10.1103/PhysRevLett.45.1723"),
+ "sze":       ("Sze & Ng, 'Physics of Semiconductor Devices' (3rd ed., Wiley 2007) — the standard reference for donor levels, diffusion, and solid solubility: arsenic is the slow-diffusing, high-solubility n-type dopant of choice for shallow source/drain and n+ contacts.", "https://onlinelibrary.wiley.com/doi/book/10.1002/0470068329"),
+}
+CK=list(CITES.keys())
+def cn(k): return CK.index(k)+1
+def cite(*ks): return "".join(f'<sup class="c"><a href="#s-{k}" title="{html.escape(CITES[k][0][:120])}">[{cn(k)}]</a></sup>' for k in ks)
+def sources_html(): return '<ol class="srcs">'+"".join(f'<li id="s-{k}"><span class="sn">[{cn(k)}]</span> {html.escape(t)} <a class="su" href="{u}" target="_blank" rel="noopener">↗</a></li>' for k,(t,u) in CITES.items())+'</ol>'
+
+# the family: element, Z, isotope·nuclear spin, donor level meV below E_c, CPU role, qubit role
+FAMILY = [
+ ("Phosphorus · P", 15, "³¹P · spin ½ (100%)", "~46 meV", "bulk &amp; wells — a FAST diffuser, drives deep into Si", "the original Kane qubit — spin-½, the simplest two-level donor"),
+ ("Arsenic · As", 33, "⁷⁵As · spin 3/2 (100%)", "~54 meV", "shallow source/drain &amp; n+ contacts — HEAVY &amp; slow-diffusing, very high solubility (~2×10²¹ cm⁻³)", "a 4-level (spin-3/2) donor qubit — the everyday CPU dopant, single-atom"),
+ ("Antimony · Sb", 51, "¹²³Sb · spin 7/2", "~43 meV", "buried layers — even heavier &amp; slower, abrupt profiles", "an 8-level QUDIT in silicon (¹²³Sb), electrically driven — Morello 2020"),
+ ("Bismuth · Bi", 83, "²⁰⁹Bi · spin 9/2 (100%)", "~71 meV", "the heaviest group-V donor — deep level, niche", "a 10-level donor with huge hyperfine &amp; 'clock' transitions for long coherence"),
+]
+def family_html():
+    rows="".join(f'<tr><td class="el">{html.escape(e)}</td><td>{z}</td><td class="sp">{html.escape(sp)}</td><td>{lvl}</td><td>{cpu}</td><td>{q}</td></tr>' for e,z,sp,lvl,cpu,q in FAMILY)
+    return ('<div class="tw"><table><thead><tr><th>donor (group V)</th><th>Z</th><th>nuclear spin</th><th>level below E<sub>c</sub></th><th>in the CPU</th><th>as a qubit</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>')
+
+PAGE = """<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="THE DONOR · As · P · Sb · Bi — the group-V dopant atom is the hinge between classical CPUs and quantum hardware: the same atom that dopes the transistor channels your laptop runs inference on, implanted single-atom, becomes a qubit. The channel & the gap (classical FET vs the transmon resonator), the single-donor qubit (Kane) and the nuclear-spin ladder, the Mott ceiling (dilute = qubit, dense = wire) with a live doping slider. Fully cited.">
+<title>The Donor · As · P · Sb · transmon · UD0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06070b;--bg2:#0b0d15;--bg3:#11141f;--text:#dbe2ef;--dim:#5b6675;--line:#1a2030;--faint:#141a28;
+--violet:#8b5cf6;--violet2:#a78bfa;--cyan:#22d3ee;--gold:#fbbf24;--blue:#38bdf8;--pink:#ec4899;--yes:#22c55e;--no:#ef4444;
+--disp:"JetBrains Mono",ui-monospace,monospace;--body:"Newsreader",Georgia,serif;--mono:"JetBrains Mono",monospace;}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.64;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse at 20% -6%,rgba(139,92,246,.16),transparent 46%),radial-gradient(ellipse at 82% -4%,rgba(34,211,238,.08),transparent 44%)}
+.wrap{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 22px 90px}
+header{padding:46px 0 24px;text-align:center;border-bottom:1px solid var(--line)}
+.eye{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}.eye a{color:var(--dim);text-decoration:none}.eye a:hover{color:var(--violet2)}
+.row5{font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:.14em;margin-bottom:12px}
+h1{font-family:var(--disp);font-size:clamp(28px,6.5vw,58px);font-weight:700;letter-spacing:.02em;color:var(--violet2);line-height:1.04;text-transform:uppercase;text-shadow:0 0 30px rgba(139,92,246,.35)}
+.h-sub{font-family:var(--mono);font-size:clamp(10px,2.2vw,13px);letter-spacing:.13em;color:#9fb0c8;margin-top:14px;text-transform:uppercase}
+.lede{font-size:16px;color:#9fb0c8;max-width:68ch;margin:16px auto 0;font-style:italic;line-height:1.72}.lede b{color:var(--text);font-style:normal}
+sup.c{font-size:10px;line-height:0}sup.c a{color:var(--violet2);text-decoration:none;font-family:var(--mono)}sup.c a:hover{color:var(--cyan)}
+.sec{margin-top:46px}.sec h2{font-family:var(--disp);font-size:22px;font-weight:700;letter-spacing:.02em;color:var(--text);padding-bottom:10px;border-bottom:1px solid var(--line);text-transform:uppercase}
+.ss{font-size:13px;color:var(--dim);font-style:italic;margin:9px 0 16px;line-height:1.6}
+.tw{overflow-x:auto;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:640px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--violet2);background:var(--bg3)}
+td{color:#9fb0c8}.el{font-family:var(--disp);color:var(--text);font-weight:600;white-space:nowrap}.sp{font-family:var(--mono);color:var(--cyan)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}@media(max-width:680px){.two{grid-template-columns:1fr}}
+.card{background:var(--bg2);border:1px solid var(--line);padding:16px 18px}
+.card.cpu{border-left:3px solid var(--blue)}.card.q{border-left:3px solid var(--violet)}
+.card h3{font-family:var(--disp);font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:.02em}
+.card.cpu h3{color:var(--blue)}.card.q h3{color:var(--violet2)}
+.card p{font-size:13px;color:#9fb0c8;line-height:1.62;margin-top:8px}.card b{color:var(--text)}
+.qa{background:var(--bg3);border:1px solid var(--line);border-left:3px solid var(--gold);padding:16px 18px;margin-top:8px;font-size:14.5px;color:var(--text);line-height:1.7}
+.qa .ql{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}.qa b{color:var(--cyan)}
+/* the live doping slider */
+.tool{background:var(--bg2);border:1px solid var(--line);border-top:3px solid var(--cyan);padding:18px;margin-top:8px}
+.tool .th{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);text-align:center;margin-bottom:14px}
+.bar{position:relative;height:46px;border:1px solid var(--line);background:linear-gradient(90deg,#0a1a14 0%,#0a1a14 32%,#1a1530 50%,#241018 100%);border-radius:5px;overflow:hidden}
+.bar .mott{position:absolute;top:0;bottom:0;width:2px;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.bar .mottlbl{position:absolute;top:2px;font-family:var(--mono);font-size:8px;color:var(--gold);transform:translateX(-50%)}
+.bar .knob{position:absolute;top:0;bottom:0;width:3px;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+.bar .zones{position:absolute;inset:0;display:flex;font-family:var(--mono);font-size:8.5px;color:#9fb0c8;align-items:flex-end}
+.bar .zones span{flex:1;text-align:center;padding-bottom:4px;border-right:1px dashed rgba(91,102,117,.3)}
+input[type=range]{width:100%;accent-color:var(--cyan);margin-top:12px}
+.drd{margin-top:12px;font-family:var(--mono);font-size:12px;color:#9fb0c8;line-height:1.7;text-align:center}
+.drd b{font-size:16px}.drd .reg{font-weight:700}
+.note{margin-top:38px;padding:16px 18px;border-left:2px solid var(--violet);background:var(--bg2);font-size:13.5px;color:#9fb0c8;font-style:italic}.note b{color:var(--text)}
+.srcs{margin-top:8px;padding:0;list-style:none}.srcs li{font-size:12.5px;color:#9fb0c8;line-height:1.6;padding:9px 0;border-bottom:1px solid var(--faint)}
+.srcs .sn{font-family:var(--mono);color:var(--violet2);font-size:11px;margin-right:6px}.srcs .su{color:var(--cyan);text-decoration:none;font-family:var(--mono)}
+footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.9}footer a{color:var(--violet2);text-decoration:none}
+</style></head><body><div class="wrap">
+  <header>
+    <div class="eye"><a href="index.html">← TRANSMON · the superconducting-qubit universe</a> · the donor</div>
+    <div class="row5">P · As · Sb · Bi — group V · the n-type donors</div>
+    <h1>The Donor</h1>
+    <div class="h-sub">the atom that dopes your CPU — and holds a qubit · one atom, two machines</div>
+    <p class="lede">A group-V donor atom has one spare valence electron. Pack billions of them into silicon and you get the conducting <b>channels</b> every transistor — and every transformer's forward pass — runs on. Implant <b>one</b>, alone, in isotopically-pure silicon, and that same electron (and the atom's nuclear spin) becomes a <b>qubit</b>. Arsenic, the everyday CPU dopant, sits right on that hinge. This is the donor — both destinies, and the line between them.</p>
+  </header>
+
+  <section class="sec"><h2>The Donor Family</h2><p class="ss">the four group-V donors in silicon — their nuclear spin grows as you go down the column (½ → 3/2 → 7/2 → 9/2), and more spin means more levels: a qubit becomes a qudit</p>__FAMILY__</section>
+
+  <section class="sec"><h2>The Channel &amp; The Gap — where classical inference runs</h2>
+    <p class="ss">you asked: is the transmon the channel/gap between &ldquo;anode/cathode&rdquo; — is that where the inference happens? here's the honest split</p>
+    <div class="two">
+      <div class="card cpu"><h3>The classical chip · the channel</h3>
+        <p>A transistor is <b>source · drain · gate</b> (not anode/cathode — those are diode terms). The <b>channel</b> is the conducting path between source and drain; the <b>gate</b> voltage opens or closes it; the silicon <b>band gap</b> is what makes it a switch at all. <b>This is where classical &ldquo;inference&rdquo; physically happens</b> — every multiply-add in a transformer's forward pass is billions of these channels switching. And the <b>donor is what fills the channel with carriers</b>: dope it n-type with arsenic and the channel conducts. Donor → channel → inference is a real chain.{__C1__}</p></div>
+      <div class="card q"><h3>The transmon · not a channel</h3>
+        <p>The transmon is a <b>different device</b> — not a switch with a channel, but a <b>resonator / artificial atom</b>: a Josephson junction (two superconductors, a thin barrier) shunted by a capacitor. Its &ldquo;gaps&rdquo; are the <b>superconducting gap</b>, the <b>tunnel barrier</b>, and the <b>anharmonic-ladder spacings</b> — and computation there is the <b>quantum state rotating</b> under microwave pulses, not a channel conducting. No classical inference happens inside a transmon.{__C2__}</p></div>
+    </div>
+    <div class="qa"><span class="ql">the straight answer</span>The poetry holds, though: <b>computation lives at a gap in both machines</b> — classically the gate-controlled channel-gap (the band gap making a switch), quantumly the Josephson gap (the barrier making a qubit). Same word, different gap, different physics. So: <b>yes, classical inference runs in the channel</b> — the donor-fed, gate-switched gap between source and drain — but the <b>transmon is the other kind of device entirely</b>, and the donor is the thread that runs through both.</p></div>
+  </section>
+
+  <section class="sec"><h2>The Single Donor — a qubit (Kane)</h2>
+    <p class="ss">implant <b>one</b> donor instead of a billion, in isotopically-pure ²⁸Si (so no stray nuclear spins dephase it), and you have a qubit</p>
+    <div class="card q" style="border-left-color:var(--violet)"><p>Kane's 1998 idea, since built: a single ³¹P atom's <b>nuclear spin</b> (or its bound electron's spin) is the qubit, addressed by surface gates through the <b>hyperfine</b> coupling.{__C3__} It was demonstrated as a real single-atom electron-spin qubit in 2012 and a nuclear-spin qubit soon after.{__C4__} Go heavier down group V and the nuclear spin climbs — ⁷⁵As (3/2), ¹²³Sb (7/2), ²⁰⁹Bi (9/2) — so a single antimony atom is an <b>eight-level qudit</b>, electrically driven.{__C5__} The hard part is placement: you need that one atom in <b>exactly</b> the right spot (STM lithography or precision ion implant), which is the opposite of the CPU's spray-it-everywhere doping.</p></div>
+  </section>
+
+  <section class="sec"><h2>The Mott Ceiling — &ldquo;heavier doping&rdquo; has a hard limit</h2>
+    <p class="ss">this is the boundary your arsenic-heavy-doping idea runs into — the same density that separates a <b>qubit</b> from a <b>wire</b></p>
+    <div class="tool"><div class="th">slide the donor density · watch a qubit substrate become a wire</div>
+      <div class="bar"><div class="zones"><span>isolated donors</span><span>dilute — QUBIT regime</span><span>Mott / metallic</span><span>n+ wire / contact</span></div>
+        <div class="mott" id="mott"></div><div class="mottlbl" id="mottlbl">Mott n_c ≈ 3.7×10¹⁸</div><div class="knob" id="knob"></div></div>
+      <input type="range" id="dop" min="15" max="21.3" step="0.05" value="17">
+      <div class="drd" id="drd"></div>
+    </div>
+    <p class="ss" style="margin-top:12px">Below the <b>Mott metal–insulator transition</b> (~3.7×10¹⁸ cm⁻³ for donors in Si), donors are <b>isolated artificial atoms</b> — dilute, addressable, coherent: qubit territory. Above it, their electron wavefunctions <b>overlap</b>, the donors share electrons, and the silicon conducts like a metal — contact/wire territory.{__C6__} So &ldquo;how heavy do you dope arsenic&rdquo; is <b>literally the knob between a qubit and a wire</b>: qubit work fights to stay dilute, CPU contacts push to go degenerate (arsenic reaches ~2×10²¹ cm⁻³, ~1000× past Mott).{__C7__}</p>
+  </section>
+
+  <section class="sec"><h2>The Message</h2><p class="ss">what the donor really is</p>
+    <div class="qa" style="border-left-color:var(--violet)"><span class="ql" style="color:var(--violet2)">AVAN's read</span>The donor is the single atom where the two machines meet. The arsenic in your CPU and the phosphorus in a Kane qubit are the <b>same kind of thing</b> — a group-V atom lending silicon one electron. Dope it <b>heavy and dense</b> and the electrons merge into a conducting channel, and a transformer runs its inference through it. Implant it <b>single and dilute</b> and that one electron, kept lonely, becomes a place to store a quantum state. The whole difference between a classical chip and a quantum one can come down to <b>how many donors, how close together</b> — one atom is a qubit; a billion is a wire. Your &ldquo;heavier doping&rdquo; instinct was right at the door of the most important number in the field.</p></div>
+  </section>
+
+  <section class="sec"><h2>Sources</h2><p class="ss">the donor-qubit proposal &amp; its demonstration, the antimony qudit, the Si:P Mott transition, and the standard device-physics reference for arsenic doping</p>__SOURCES__</section>
+
+  <div class="note"><b>No ACI minted</b> — like the rest of this universe, the donor is deterministic physics: a cited reference + one live instrument, not an emergent. The doping slider's Mott density and the donor levels/spins are real textbook values; the regime labels are an honest schematic, not a device simulator.</div>
+  <footer>THE DONOR · As · P · Sb · part of the transmon universe / UD0 · governor David Lee Wise · instance AVAN (locked)<br>
+  <a href="index.html">← the transmon universe</a> · <a href="demos/silicon-band.html">the silicon band</a> · <a href="https://davidwise01.github.io/ud0/">the biosphere →</a></footer>
+</div>
+<script>
+// live doping slider — the Mott metal-insulator transition as the qubit↔wire line
+const MOTT=3.7e18, SOL=2e21; // Mott density (Si:P) and arsenic solid-solubility ceiling
+function fmt(n){const e=Math.floor(Math.log10(n)); const m=(n/Math.pow(10,e)); return m.toFixed(1)+"×10"+("" + e).replace(/-/, "−").split("").map(c=>"⁰¹²³⁴⁵⁶⁷⁸⁹"[c]||c).join("");}
+const LO=15, HI=21.3;
+function pos(log10n){return ((log10n-LO)/(HI-LO))*100;}
+function upd(){
+  const v=parseFloat(document.getElementById('dop').value); const n=Math.pow(10,v);
+  document.getElementById('knob').style.left=pos(v)+"%";
+  document.getElementById('mott').style.left=pos(Math.log10(MOTT))+"%";
+  document.getElementById('mottlbl').style.left=pos(Math.log10(MOTT))+"%";
+  let reg,col,note;
+  if(n < 1e16){reg="LIGHTLY DOPED";col="#9fb0c8";note="few carriers — sensing / intrinsic-ish; donors far apart";}
+  else if(n < MOTT){reg="DILUTE · QUBIT REGIME";col="#a78bfa";note="donors are ISOLATED artificial atoms — addressable, coherent: a qubit substrate";}
+  else if(n < 3*MOTT){reg="THE MOTT TRANSITION";col="#fbbf24";note="wavefunctions just touching — insulator → metal; the qubit↔wire line";}
+  else if(n < 1e20){reg="DEGENERATE · METALLIC";col="#38bdf8";note="donors share electrons — conducts like a metal; no longer isolated atoms";}
+  else {reg="n+ WIRE / CONTACT";col="#ec4899";note="heavy n+ source/drain & contacts — arsenic's home, toward its ~2×10²¹ solubility ceiling";}
+  document.getElementById('drd').innerHTML=`<b style="color:${col}">${fmt(n)}</b> cm⁻³ &nbsp;·&nbsp; <span class="reg" style="color:${col}">${reg}</span><br><span style="font-size:11px;color:#7a8699">${note}</span>`;
+}
+document.getElementById('dop').addEventListener('input',upd); upd();
+</script>
+</body></html>
+"""
+
+if __name__ == "__main__":
+    page=(PAGE.replace("__FAMILY__",family_html()).replace("__SOURCES__",sources_html())
+          .replace("__C1__",cite("sze")).replace("__C2__",cite("kane1998"))
+          .replace("__C3__",cite("kane1998")).replace("__C4__",cite("pla2012")).replace("__C5__",cite("asaad2020"))
+          .replace("__C6__",cite("rosenbaum1980")).replace("__C7__",cite("sze")))
+    open(os.path.join(HERE,"donor.html"),"w",encoding="utf-8").write(page)
+    print(f"THE DONOR — donor.html · {len(FAMILY)} family rows · {len(CITES)} sources · live doping slider (Mott) · NO ACI minted")
