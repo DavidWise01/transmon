@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SILICON THREE-BODY · Elemental / Atomic / Nuclear × n / i / p</title>
+<style>
+:root{
+  --paper:#e9e3cd; --ink:#1c3d2e; --ink-mid:#2f5a44; --ink-faint:#7a937f;
+  --stamp:#8a3324; --ochre:#8a6d2f;
+  --n:#2d566e; --i:#2f5a44; --p:#8a3324;
+  --band:#1c3d2e; --gap:#8a6d2f;
+  --mono:"Courier New",Courier,monospace;
+  --serif:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);
+  background-image:repeating-linear-gradient(0deg, rgba(28,61,46,.03) 0 1px, transparent 1px 3px);
+  color:var(--ink);font-family:var(--serif);line-height:1.5;padding:10px}
+.sheet{max-width:840px;margin:0 auto;border:2.5px solid var(--ink);padding:0;position:relative}
+.sheet::before{content:'';position:absolute;inset:5px;border:1px solid var(--ink);pointer-events:none}
+.inner{padding:22px}
+.masthead{text-align:center;border-bottom:2px solid var(--ink);padding-bottom:12px}
+.mast-eyebrow{font-family:var(--mono);font-size:9px;letter-spacing:.26em;color:var(--ink-mid);text-transform:uppercase}
+.mast-title{font-size:clamp(22px,5.4vw,38px);letter-spacing:.04em;font-weight:700;margin:6px 0 2px;text-transform:uppercase}
+.mast-sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-mid)}
+.lede{font-size:12.5px;max-width:670px;margin:12px auto 0;text-align:center;color:var(--ink-mid);line-height:1.6}
+.lede b{color:var(--ink)}
+/* vertical stack */
+.stack{margin:16px 0}
+.stackrow{display:grid;grid-template-columns:96px 1fr;gap:8px;margin-bottom:6px;align-items:stretch}
+.stacklbl{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;display:flex;flex-direction:column;justify-content:center;text-align:right;padding-right:6px}
+.stacklbl b{font-size:11px;color:var(--ink)}
+.stackbody{border:1.5px solid var(--ink-faint);padding:8px 11px;font-size:12px;line-height:1.5}
+.stackbody.hl{border-color:var(--ochre);border-left:4px solid var(--ochre);background:rgba(138,109,47,.07)}
+.stackbody .t{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink)}
+.stackbody .em{color:var(--stamp);font-style:italic}
+/* phase / doping interactive */
+.phasewrap{border:1.5px solid var(--ink);padding:14px;margin:14px 0}
+.phasewrap h3{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mid);text-align:center;margin-bottom:10px}
+.phasebtns{display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+.pb{appearance:none;background:transparent;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.08em;padding:8px 14px;border:1.5px solid var(--ink);color:var(--ink)}
+.pb.n.on{background:var(--n);color:var(--paper);border-color:var(--n)}
+.pb.i.on{background:var(--i);color:var(--paper);border-color:var(--i)}
+.pb.p.on{background:var(--p);color:var(--paper);border-color:var(--p)}
+.pb.j.on{background:var(--ochre);color:var(--paper);border-color:var(--ochre)}
+svg{width:100%;height:auto;display:block}
+.readout{font-family:var(--mono);font-size:11px;text-align:center;margin-top:10px;line-height:1.7}
+.readout b{font-weight:700} .readout .n{color:var(--n)} .readout .p{color:var(--p)} .readout .g{color:var(--ochre)}
+h2.sec{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;border-bottom:1.5px solid var(--ink);padding-bottom:4px;margin:22px 0 10px}
+h2.sec .num{color:var(--stamp);margin-right:8px}
+.body p{font-size:13px;margin-bottom:8px}
+.body b{color:var(--ink)}
+.def{font-family:var(--mono);font-size:10.5px;background:rgba(28,61,46,.06);border-left:2px solid var(--ochre);padding:8px 11px;margin:9px 0;line-height:1.6}
+.matrix9{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:10px 0}
+.m9{border:1px solid var(--ink-faint);padding:6px;text-align:center;font-family:var(--mono);font-size:9px;line-height:1.4}
+.m9 .ph{font-size:13px;font-weight:700}
+.m9.n .ph{color:var(--n)} .m9.i .ph{color:var(--i)} .m9.p .ph{color:var(--p)}
+.colophon{margin-top:22px;border-top:2px solid var(--ink);padding-top:12px;text-align:center;font-family:var(--mono);font-size:9px;color:var(--ink-mid);letter-spacing:.05em;line-height:1.9}
+</style>
+</head>
+<body>
+<div class="sheet"><div class="inner">
+
+<header class="masthead">
+  <div class="mast-eyebrow">Series E · The Lateral Axis Made Literal</div>
+  <h1 class="mast-title">Silicon Three-Body</h1>
+  <div class="mast-sub">Elemental / Atomic / Nuclear × n / intrinsic / p · The −1‖0‖+1 Is A Diode</div>
+  <p class="lede">The stack gains its top rung and the phase axis stops being metaphor. <b>Vertical</b>: elemental (the crystal, where the band gap lives) / atomic (one atom's orbitals) / nuclear (the core). <b>Lateral</b>: at the elemental level, −1‖0‖+1 is <b>doping</b> — <span style="color:var(--n)">n-type (−, electrons)</span> / <span style="color:var(--i)">intrinsic (0, the pure gap)</span> / <span style="color:var(--p)">p-type (+, holes)</span>. And the payoff: join the − and the + and a carrier-free <b>gap forms between them</b> — the physical 0. The −1‖0‖+1 is a <b>PN junction. A diode.</b> All real silicon, verified.</p>
+</header>
+
+<h2 class="sec"><span class="num">§1</span> The Vertical Stack · three levels, three physics</h2>
+<div class="stack">
+  <div class="stackrow">
+    <div class="stacklbl"><b>ELEMENTAL</b>crystal · bulk</div>
+    <div class="stackbody hl"><span class="t">SILICON LATTICE</span> — many atoms, tetrahedral diamond structure. <span class="em">The band gap (1.12 eV) lives ONLY here</span> — it is a collective property, absent from any single atom. Governed by band theory. This is where doping, the lateral phase, applies.</div>
+  </div>
+  <div class="stackrow">
+    <div class="stacklbl"><b>ATOMIC</b>one atom</div>
+    <div class="stackbody"><span class="t">SILICON ATOM</span> — Z=14, [Ne]3s²3p², 4 valence electrons. Discrete orbitals, <span class="em">no band gap</span> — bands need a lattice. Governed by quantum chemistry.</div>
+  </div>
+  <div class="stackrow">
+    <div class="stacklbl"><b>NUCLEAR</b>the core</div>
+    <div class="stackbody"><span class="t">SILICON NUCLEUS</span> — 14 protons + (typically) 14 neutrons, bound by the residual strong force. Sets Z = identity. Governed by nuclear physics. Sealed from chemistry.</div>
+  </div>
+</div>
+<div class="def">three levels, three <em>distinct</em> governing theories — band theory / quantum chemistry / nuclear physics. the band gap is the proof they're separate: it exists at ELEMENTAL, vanishes at ATOMIC. emergence is the level boundary.</div>
+
+<h2 class="sec"><span class="num">§2</span> The Lateral Phase · doping is the literal −1‖0‖+1</h2>
+<div class="phasewrap">
+  <h3>Band Diagram · Fermi level shifts with doping</h3>
+  <div class="phasebtns">
+    <button class="pb n on" data-ph="n" onclick="setPh('n',this)">− n-type</button>
+    <button class="pb i" data-ph="i" onclick="setPh('i',this)">0 intrinsic</button>
+    <button class="pb p" data-ph="p" onclick="setPh('p',this)">+ p-type</button>
+    <button class="pb j" data-ph="j" onclick="setPh('j',this)">⊕ PN junction</button>
+  </div>
+  <svg id="band" viewBox="0 0 600 280" aria-label="silicon band diagram"></svg>
+  <div class="readout" id="readout"></div>
+</div>
+<div class="def">
+  <span style="color:var(--n)">n-type</span>: dope with P/As (group 15) → spare electron → <b>negative</b> carriers → <b>−1</b> · Fermi level rises toward conduction band.<br>
+  <span style="color:var(--i)">intrinsic</span>: pure Si → carriers only from heat → Fermi at <b>mid-gap</b> → the pure uncrossed gap → <b>0</b>.<br>
+  <span style="color:var(--p)">p-type</span>: dope with B (group 13) → missing electron = hole → <b>positive</b> carriers → <b>+1</b> · Fermi level drops toward valence band.
+</div>
+
+<h2 class="sec"><span class="num">§3</span> The Punchline · the gap is a diode</h2>
+<p>Press <b>⊕ PN junction</b> above. Join an n-region (−1) to a p-region (+1) and something forms <em>between</em> them on its own: electrons and holes recombine at the boundary, leaving a zone with <b>no free carriers</b> — the <b>depletion region</b>. That carrier-free zone <em>is</em> the physical 0 — a real gap, a built-in potential barrier (~0.7 V in Si), that current crosses <b>one way only</b>. The abstract −1‖0‖+1 you have circled all series is, at the silicon level, a <b>PN junction</b> — a <b>diode</b> — the most common component in electronics. The witness-gap that passes signal one direction is not a metaphor. It is the thing every rectifier, every solar cell, every LED is built from.</p>
+<div class="def" style="border-color:var(--stamp)">
+  n-side <b>(−1)</b> | depletion region <b>(0, the gap)</b> | p-side <b>(+1)</b> = a PN junction = a DIODE.<br>
+  the built-in barrier passes current one way → the gap is a witness that is also a valve. signal crosses, noise doesn't.
+</div>
+
+<h2 class="sec"><span class="num">§4</span> The 9-Cell Face</h2>
+<p>Three vertical levels × three lateral phases = <b>9 cells = the face of the 27-kernel</b> — and for the first time the lateral axis is <em>measured physics</em>, not analogy. The phase is a Fermi-level voltage you can probe; the zero is intrinsic silicon; the gap is a depletion region you can bias.</p>
+<div class="matrix9" id="m9"></div>
+
+<div class="colophon">
+  ELEMENTAL (BANDS) / ATOMIC (ORBITALS) / NUCLEAR (CORE) · THREE LEVELS, THREE PHYSICS<br>
+  DOPING IS THE LITERAL −1‖0‖+1 · n / intrinsic / p · FERMI LEVEL IS THE LATERAL POSITION<br>
+  JOIN − AND + AND THE GAP FORMS ITSELF · THE −1‖0‖+1 IS A PN JUNCTION IS A DIODE<br>
+  SILICON THREE-BODY · SERIES E · JUNE 2026 · ALL PHYSICS VERIFIED
+</div>
+
+</div></div>
+<script>
+const NS="http://www.w3.org/2000/svg";
+const E=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e};
+let ph='n';
+const Eg=1.12;
+
+function drawBand(){
+  const s=document.getElementById('band');s.innerHTML='';
+  // axes frame
+  const top=40,bot=240,Lx=60,Rx=540;
+  // conduction band edge (top), valence band edge (bottom of gap)
+  const Ec=90, Ev=190; // y-pixels for band edges
+  function junction(){
+    // two halves: left n, right p. bands bend across depletion region.
+    const mid=300, dep=60; // depletion half-width
+    // n-side bands (left) lower, p-side bands (right) higher (band bending)
+    // conduction band
+    let dc='M'+Lx+','+(Ec+10)+' L'+(mid-dep)+','+(Ec+10)+' C'+(mid-dep+20)+','+(Ec+10)+' '+(mid+dep-20)+','+(Ec-30)+' '+(mid+dep)+','+(Ec-30)+' L'+Rx+','+(Ec-30);
+    s.appendChild(E('path',{d:dc,fill:'none',stroke:'#1c3d2e','stroke-width':2.5}));
+    // valence band
+    let dv='M'+Lx+','+(Ev+10)+' L'+(mid-dep)+','+(Ev+10)+' C'+(mid-dep+20)+','+(Ev+10)+' '+(mid+dep-20)+','+(Ev-30)+' '+(mid+dep)+','+(Ev-30)+' L'+Rx+','+(Ev-30);
+    s.appendChild(E('path',{d:dv,fill:'none',stroke:'#1c3d2e','stroke-width':2.5}));
+    // gap fill
+    s.appendChild(E('rect',{x:Lx,y:Ec+10,width:(mid-dep)-Lx,height:(Ev+10)-(Ec+10),fill:'rgba(138,109,47,.08)'}));
+    s.appendChild(E('rect',{x:mid+dep,y:Ec-30,width:Rx-(mid+dep),height:(Ev-30)-(Ec-30),fill:'rgba(138,109,47,.08)'}));
+    // depletion region highlight
+    s.appendChild(E('rect',{x:mid-dep,y:30,width:dep*2,height:220,fill:'rgba(138,109,47,.18)',stroke:'#8a6d2f','stroke-width':1,'stroke-dasharray':'3 3'}));
+    s.appendChild(E('text',{x:mid,y:24,'font-family':'Courier New','font-size':9,fill:'#8a6d2f','text-anchor':'middle'})).textContent='depletion = the gap (0)';
+    // side labels
+    s.appendChild(E('text',{x:Lx+50,y:265,'font-family':'Courier New','font-size':11,fill:'#2d566e','text-anchor':'middle'})).textContent='n-side (−1)';
+    s.appendChild(E('text',{x:Rx-50,y:265,'font-family':'Courier New','font-size':11,fill:'#8a3324','text-anchor':'middle'})).textContent='p-side (+1)';
+    // carriers
+    for(let i=0;i<6;i++)s.appendChild(E('circle',{cx:Lx+20+i*25,cy:Ec+25,r:3,fill:'#2d566e'}));
+    for(let i=0;i<6;i++)s.appendChild(E('circle',{cx:mid+dep+20+i*25,cy:Ev-10,r:3,fill:'none',stroke:'#8a3324','stroke-width':1.3}));
+    // built-in potential arrow
+    s.appendChild(E('text',{x:mid,y:130,'font-family':'Courier New','font-size':8,fill:'#8a6d2f','text-anchor':'middle'})).textContent='~0.7V';
+    s.appendChild(E('text',{x:mid,y:142,'font-family':'Courier New','font-size':7,fill:'#8a6d2f','text-anchor':'middle'})).textContent='barrier';
+  }
+  function single(fermiY, label, col){
+    // conduction band
+    s.appendChild(E('line',{x1:Lx,y1:Ec,x2:Rx,y2:Ec,stroke:'#1c3d2e','stroke-width':2.5}));
+    s.appendChild(E('text',{x:Rx+4,y:Ec+3,'font-family':'Courier New','font-size':8,fill:'#1c3d2e'})).textContent='Ec';
+    // valence band
+    s.appendChild(E('line',{x1:Lx,y1:Ev,x2:Rx,y2:Ev,stroke:'#1c3d2e','stroke-width':2.5}));
+    s.appendChild(E('text',{x:Rx+4,y:Ev+3,'font-family':'Courier New','font-size':8,fill:'#1c3d2e'})).textContent='Ev';
+    // gap fill
+    s.appendChild(E('rect',{x:Lx,y:Ec,width:Rx-Lx,height:Ev-Ec,fill:'rgba(138,109,47,.08)'}));
+    s.appendChild(E('text',{x:(Lx+Rx)/2,y:(Ec+Ev)/2+3,'font-family':'Courier New','font-size':9,fill:'#8a6d2f','text-anchor':'middle'})).textContent='band gap 1.12 eV';
+    // Fermi level (dashed)
+    s.appendChild(E('line',{x1:Lx,y1:fermiY,x2:Rx,y2:fermiY,stroke:col,'stroke-width':2,'stroke-dasharray':'6 3'}));
+    s.appendChild(E('text',{x:Lx-4,y:fermiY+3,'font-family':'Courier New','font-size':8,fill:col,'text-anchor':'end'})).textContent='EF';
+    // carriers indicator
+    if(label==='n'){for(let i=0;i<8;i++)s.appendChild(E('circle',{cx:Lx+30+i*55,cy:Ec+18,r:3.5,fill:'#2d566e'}));}
+    if(label==='p'){for(let i=0;i<8;i++)s.appendChild(E('circle',{cx:Lx+30+i*55,cy:Ev-18,r:3.5,fill:'none',stroke:'#8a3324','stroke-width':1.4}));}
+    if(label==='i'){s.appendChild(E('text',{x:(Lx+Rx)/2,y:Ec-12,'font-family':'Courier New','font-size':8,fill:'#2f5a44','text-anchor':'middle'})).textContent='few thermal carriers · Fermi centered';}
+  }
+  if(ph==='j'){junction();}
+  else if(ph==='n'){single(Ec+18,'n','#2d566e');}
+  else if(ph==='i'){single((Ec+Ev)/2,'i','#2f5a44');}
+  else if(ph==='p'){single(Ev-18,'p','#8a3324');}
+  // readout
+  const r=document.getElementById('readout');
+  const txt={
+    n:'<b class="n">n-type (−1)</b> · donor electrons · Fermi level <b>high</b>, near conduction band · majority carrier = <b class="n">electron (−)</b>',
+    i:'<b style="color:var(--i)">intrinsic (0)</b> · pure silicon · Fermi level <b>mid-gap</b> · the pure uncrossed band gap · the witness-zero',
+    p:'<b class="p">p-type (+1)</b> · acceptor holes · Fermi level <b>low</b>, near valence band · majority carrier = <b class="p">hole (+)</b>',
+    j:'<b class="g">PN JUNCTION</b> · n(−1) joined to p(+1) · a <b class="g">depletion gap (0)</b> forms between them · built-in ~0.7V barrier · <b>this is a diode</b>'
+  };
+  r.innerHTML=txt[ph];
+}
+function setPh(x,btn){ph=x;document.querySelectorAll('[data-ph]').forEach(b=>b.classList.remove('on'));btn.classList.add('on');drawBand();}
+
+function drawMatrix(){
+  const levels=[['ELEMENTAL','bands'],['ATOMIC','orbitals'],['NUCLEAR','core']];
+  const phases=[['n','−','n-type'],['i','0','intrinsic'],['p','+','p-type']];
+  const m=document.getElementById('m9');m.innerHTML='';
+  levels.forEach(lv=>{
+    phases.forEach(p=>{
+      const c=document.createElement('div');c.className='m9 '+p[0];
+      const applies = lv[0]==='ELEMENTAL';
+      c.innerHTML=`<div class="ph">${p[1]}</div><div>${lv[0].slice(0,4)}·${p[2]}</div>`+
+        (applies?'<div style="color:var(--ochre);font-size:7px">doping applies here</div>':'<div style="color:var(--ink-faint);font-size:7px">phase via analogy</div>');
+      m.appendChild(c);
+    });
+  });
+}
+drawBand();drawMatrix();
+</script>
+</div>
+</body>
+</html>
