@@ -26,6 +26,8 @@ CITES = {
  "shillito2022":("Shillito, Petrescu, Cohen, Beaudoin, Blais et al., 'Dynamics of Transmon Ionization,' Phys. Rev. Applied 18, 034031 (2022) — strong drive ejects the state out of the cosine well into the continuum: a real, studied effect (the demo's 256→257 escape).", "https://arxiv.org/abs/2203.11235"),
  "nakamura1999":("Nakamura, Pashkin & Tsai, 'Coherent control of macroscopic quantum states in a single-Cooper-pair box,' Nature 398, 786 (1999) — the first coherent superconducting charge qubit, the transmon's ancestor.", "https://www.nature.com/articles/19718"),
  "lossdiv1998":("Loss & DiVincenzo, 'Quantum computation with quantum dots,' Phys. Rev. A 57, 120 (1998) — the spin-qubit proposal: an electron spin trapped in a semiconductor quantum dot.", "https://arxiv.org/abs/cond-mat/9701055"),
+ "spin99":     ("Xue et al. (Delft), with Noiri et al. (RIKEN) & Mądzik et al. (UNSW), Nature 601 (2022) — three groups crossed >99% two-qubit gate fidelity in SILICON spin qubits (the surface-code threshold); spin qubits are now being fabricated in CMOS foundries (imec / Diraq).", "https://www.nature.com/articles/s41586-021-04273-w"),
+ "bawendi1993":("Murray, Norris & Bawendi, 'Synthesis and characterization of nearly monodisperse CdE semiconductor nanocrystallites,' J. Am. Chem. Soc. 115, 8706 (1993) — hot-injection synthesis: the size-tunable quantum dot made monodisperse and manufacturable.", "https://pubs.acs.org/doi/10.1021/ja00072a025"),
 }
 CK=list(CITES.keys())
 def cn(k): return CK.index(k)+1
@@ -45,7 +47,9 @@ PHYS = [
  ("readout & control","The Readout Resonator · Dispersive Readout","how you look without breaking it","Couple the qubit to an LC / transmission-line RESONATOR. In the dispersive regime the qubit's state PULLS the resonator's frequency by ±χ; bounce a probe tone off the resonator and its phase tells you |0⟩ vs |1⟩ — a quantum non-demolition read. (This is where an LC resonator — e.g. the 'toroid' calculator — actually belongs in a transmon.)","Real — circuit QED; the readout resonator is a literal LC/microwave cavity, the one classical-EM 'hardware invention' that genuinely touches the transmon.",["blais2004","blais2021"]),
  ("readout & control","DRAG · IQ Control","microwave pulses that don't leak","Qubits are driven by shaped microwave pulses (in-phase I and quadrature Q). Because the ladder is only weakly anharmonic, a naive pulse leaks population to |2⟩; DRAG adds a quadrature derivative term that cancels the leak. Gates are µs-to-ns shaped tones.","Real — DRAG is standard on every transmon; pulse shaping is the craft of qubit control.",["motzoi2009"]),
  ("readout & control","T1 & T2 · The Coherence Budget","how long the state survives","T1 (energy relaxation, |1⟩→|0⟩) and T2 (dephasing) set the clock: dielectric loss, quasiparticles, and two-level-system defects eat coherence. Modern transmons reach tens to hundreds of µs — every gate races the decay.","Real — the central engineering fight; coherence times are the headline number of any qubit chip.",["krantz2019"]),
- ("the siblings","The Quantum Dot · Spin Qubit","the semiconductor sibling","An electron (or its spin) trapped in a size-tunable semiconductor nanocrystal/dot: discrete atom-like levels, charging energy E_c, tunnel coupling. Spin/valley qubits in Si/SiGe and GaAs are a different qubit modality — Loss–DiVincenzo — sharing the 'artificial atom' idea with the transmon. (The 'quantum dot' vault's notes are real.)","Real and ADJACENT — quantum hardware, different substrate: semiconductor spins, not superconducting circuits.",["lossdiv1998"]),
+ ("the siblings","Quantum Confinement · The Artificial Atom","why a dot has levels","Shrink a semiconductor to 2–10 nm and the electron's wavefunction is squeezed until its energy levels go DISCRETE — an 'artificial atom' whose level spacing (and emission colour) is set by SIZE, not species. Bawendi's hot-injection synthesis (1993) made them monodisperse and manufacturable.","Real — quantum confinement is textbook; the size-tunable gap is why a dot glows the colour it does, and why it can hold a qubit. David's 4-part 'quantum dots' series renders it live.",["bawendi1993"]),
+ ("the siblings","The Quantum Dot · Spin Qubit","the semiconductor sibling","An electron's SPIN (up/down) trapped in a silicon quantum dot, used as the qubit — Loss–DiVincenzo. Discrete atom-like levels, charging energy, gate control. A different modality from the transmon that shares the 'artificial atom' idea.","Real and ADJACENT — quantum hardware on a different substrate: semiconductor spins, not superconducting circuits.",["lossdiv1998"]),
+ ("the siblings","The Silicon Spin Qubit · The Foundry Bet","the transmon's rival for scale","The platform's wager: build qubits in a CMOS FOUNDRY and ride the entire semiconductor industry's fabrication. In 2022 three groups crossed >99% two-qubit gate fidelity in silicon spin qubits (the surface-code threshold), and imec/Diraq now make them on industrial lines — the transmon's main rival for scaling.","Real and ADJACENT — the live frontier of the sibling platform; smaller and foundry-made vs the transmon's bigger, hand-fabricated circuits.",["spin99","lossdiv1998"]),
  ("the siblings","The Exciton","light meets matter","A photon absorbed in a semiconductor lifts an electron and leaves a hole; the bound electron–hole pair is an EXCITON — a light-matter quasiparticle. Excitons in quantum dots are the basis of single-photon sources and optical qubit readout, the coupling where light and matter exchange a quantum. (The live 'exciton' instrument renders this.)","Real and ADJACENT — the optical-readout / cavity-QED side of quantum hardware; the bridge from photon to qubit.",[]),
  ("the siblings","The Ion Trap","the contrast modality","Hold a single charged atom in oscillating electric fields and cool it with lasers; its internal states are the qubit. The longest-coherence, highest-fidelity qubits — and the natural CONTRAST to the transmon: atoms are identical and slow, transmons are fabricated and fast. (Named because David's folder had a 'teaching trap' — which turned out to be a security sandbox, not this.)","Real and ADJACENT — a wholly different platform, included for honest contrast, not because the folder's 'trap' was one.",[]),
 ]
@@ -54,26 +58,28 @@ GROUPS=[("the qubit","The Qubit","what a transmon is made of — Cooper pairs, a
         ("readout & control","Readout & Control","how you drive it and look at it without breaking it — the resonator, DRAG pulses, and the coherence clock"),
         ("the siblings","The Siblings","the other quantum-hardware modalities — the quantum dot, the exciton, the ion trap")]
 
-# ───────────────────────── the honest curation (the fluff-call on the folder) ─────────────────────────
-# folder, what it is, verdict (IN/ADJACENT/OUT)
+# ───────────────────────── the EXHAUSTIVE repo-wide curation (the fluff-call across all of C:\Davids files) ─────────────────────────
+# folder/cluster, what it is, verdict (IN/ADJACENT/OUT)
 CURATION = [
- ("transmon","the anharmonic-ladder demo — the anchor","IN"),
- ("quantum dot","the 'Quantum Memory Vault': real transmon + quantum-dot reference notes (E_J/E_C, ω01, α, T1, DRAG, spin qubits)","IN"),
- ("exitron.html","'Light Meets Matter' — photon · electron · exciton: a genuine light-matter explainer","IN"),
- ("toroid","an LC / RF-coil calculator — classical EM, but an LC resonator IS the transmon's readout cavity","ADJACENT"),
- ("sync pulse","Terra Prime Kernel — a security/governance framework that uses quantum-dot voltages as an attestation primitive","ADJACENT"),
- ("shield oscilattor · singlarity well · teaching trap · pulsar","cybersecurity / intrusion-detection sims (XOR shields, sinkhole defense, witness sandboxes, a 33Hz defense beacon)","OUT"),
- ("valence","a 27-phase toroidal VRM power board with bit-state monitoring","OUT"),
- ("zero point · lattice","recursive harmonic-lattice / nested-voxel visualizations (geometry, not physics)","OUT"),
- ("tensor","the 'Unity Tensor' — a ternary-logic persistence engine with abstract 'guards'","OUT"),
- ("memristor","a 128-bit logistic-map kernel (classical chaos / bifurcation), not a real memristor circuit","OUT"),
- ("gravity-processor · procs","memristive analog attractor-field processors (Ag₂S nodes, GDSII/SPICE) — classical","OUT"),
- ("hardware-lab","a visualization suite of the above prototypes — conceptual, not superconducting","OUT"),
- ("intel","an 11-deep 64-bit Verilog register stack — conventional digital logic","OUT"),
- ("seed · seed-kernel","autonomous-cell survival state machines (classical control bits)","OUT"),
- ("recursive memory whisper lattice","a hash-chained append-only database (FastAPI + SQLite) — software, not hardware","OUT"),
- ("chromatic-laser · laser","a 17-point optical coherence cavity — classical photonics, not superconducting qubits","OUT"),
- ("single cell seed.html · the wandering spark.html · diaspora","a seed kernel, a cellular-automaton 'spark' world, and an empty stub","OUT"),
+ # — the genuine fits, built in —
+ ("transmon","the anharmonic-ladder demo + this universe — the anchor","IN"),
+ ("quantum / quantum dots/ · qdots 0–3","a real 4-part SILICON SPIN-QUBIT series: quantum confinement, Bawendi hot-injection synthesis, the >99%-fidelity CMOS-foundry milestone — genuine quantum hardware (built in as the spin-qubit sibling + a live instrument)","IN"),
+ ("hardware inventions / quantum dot","the 'Quantum Memory Vault': real transmon + quantum-dot reference notes (E_J/E_C, ω01, α, T1, DRAG)","IN"),
+ ("hardware inventions / exitron.html → the exciton","'Light Meets Matter' — photon · electron · exciton: a genuine light-matter explainer (built in as an instrument)","IN"),
+ # — adjacent: real quantum hardware, already-live or other modality —
+ ("mimzy (the workbench)","the rest of the quantum stack is ALREADY LIVE: BB84, E91, the two-qubit density-matrix lab, the Bloch lab, the circuit simulator — real quantum INSTRUMENTS, cross-linked below","ADJACENT"),
+ ("hardware inventions / toroid","a classical LC / RF-coil calculator — but the LC resonator IS the transmon's dispersive-readout cavity","ADJACENT"),
+ ("quantum / cubit (Bloch · circuit sims)","pedagogical single-/multi-qubit simulators — hardware-agnostic (and already in MIMZY)","ADJACENT"),
+ ("arch-purple-book-complete-exe / THE_TRANSMON_THEORY.md","'transmon' repurposed as an AI forward-pass METAPHOR — the word, not the hardware","ADJACENT"),
+ # — out: physics, but the wrong branch / classical / symbolic —
+ ("the-cosmos · string theory · dark matter · black hole · ten dimensions · unified theory · exotic particle lab","cosmology & high-energy physics — the wrong branch of physics for a qubit-hardware universe","OUT"),
+ ("the-lattice · lattice · tensor · hypercube · 6 layer core","math, structure, automata, information geometry — not hardware","OUT"),
+ ("arc reactor · fusion · trinity fusion engine · tritium engine · fission core · al-h2o-reactor · battery · perpetual · wireless energy suite · tripod-energy-suite · plasma","energy / reactors / propulsion — no Josephson junctions or qubit resonators","OUT"),
+ ("boron · copper substrate · magnets · dipoles · icosahedra dipole · carbons · atomic · sinter block · cobalt ball · chakra","materials & EM primitives — not framed as qubit fabrication (transmons are Al/Nb on sapphire/Si; that work isn't here)","OUT"),
+ ("nano factory · holography · gyroscopes · positronic engine · posi brain lab","assorted hardware/physics sims — classical or fictional engineering","OUT"),
+ ("1/8-bit engine · base 4 · ternary · bare metal kernels · processors · cortex · intel · transformer · ttu1","classical & AI computing — not quantum hardware","OUT"),
+ ("the-forge · the-archive (UD0 domain theaters)","broad catalogues that mention 'transmon' in passing — no qubit-physics works of their own","OUT"),
+ ("hardware inventions: shield-oscillator · singularity-well · teaching-trap · pulsar · valence · zero-point · lattice · tensor · memristor · gravity-processor · procs · hardware-lab · seed · recursive-memory · lasers · diaspora","cybersecurity sims · a VRM board · geometry viz · a logistic-map kernel · memristive analog · state machines · a database · photonics · empty","OUT"),
 ]
 CUR_COL={"IN":"#22c55e","ADJACENT":"#fbbf24","OUT":"#5b6675"}
 
@@ -145,7 +151,7 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);text-al
     <div class="h-sub">a Josephson junction shunted by a capacitor · <b>an anharmonic ladder</b> · the superconducting qubit</div>
     <div class="open">“A superconducting qubit is an anharmonic ladder. Climb it.”</div>
     <p class="lede">The transmon, grown into a small universe of the hardware around it — the junction and the capacitor it's made of, the ladder it is, the resonator and pulses that read and drive it, the coherence clock it races, and its sibling qubits (the quantum dot, the exciton, the ion trap). Fully cited; two live instruments; and an honest read of which of David's 'hardware inventions' actually belong here.</p>
-    <div class="runbtns"><a href="demos/ladder-climb.html">▸ run the ladder-climb</a><a class="cy" href="demos/exciton.html">▸ run the exciton (light meets matter)</a></div>
+    <div class="runbtns"><a href="demos/ladder-climb.html">▸ run the ladder-climb</a><a class="cy" href="demos/exciton.html">▸ run the exciton</a><a class="cy" href="demos/qdots-0-idea.html">▸ the spin-qubit series (quantum dots 0–3)</a></div>
   </header>
 
   <section class="sec"><h2>The Fork — the leak is the product</h2><p class="ss">the repo's standing architectural question, kept</p>
@@ -154,7 +160,8 @@ footer{margin-top:46px;padding-top:22px;border-top:1px solid var(--line);text-al
 
   __PHYS__
 
-  <section class="sec"><h2>What I Read · What Fit</h2><p class="ss">David asked me to read the whole <b style="color:#9fb0c8">hardware inventions</b> folder and build in &ldquo;if it fits.&rdquo; Honest verdict (the fluff-call): most of it does <b style="color:#9fb0c8">not</b> — it's cybersecurity sims, classical processors, visualizers, and photonics. <span style="color:var(--yes)">IN</span> = genuine superconducting-qubit content · <span style="color:var(--gold)">ADJACENT</span> = quantum-hardware-adjacent · <span style="color:#5b6675">OUT</span> = not transmon physics</p>__CURATION__</section>
+  <section class="sec"><h2>What Fit · The Whole Biosphere Swept</h2><p class="ss">David asked me to find <b style="color:#9fb0c8">everything in all of C:\\Davids files</b> that fits the transmon universe, exhaustively. I swept the entire repo by content (grepping for josephson · transmon · superconduct · anharmonic · cooper-pair) and read every physics/quantum/hardware candidate. Honest verdict (the fluff-call): the genuine fits are <b style="color:#9fb0c8">few</b> — the one substantive new one is the silicon spin-qubit series, now built in. The rest of the giant repo is cosmology, energy/reactors, materials, math, classical &amp; AI computing — named plainly. <span style="color:var(--yes)">IN</span> = genuine superconducting-qubit content · <span style="color:var(--gold)">ADJACENT</span> = quantum-hardware-adjacent / already-live · <span style="color:#5b6675">OUT</span> = not transmon physics</p>__CURATION__
+    <div class="note" style="margin-top:18px;border-left-color:var(--cyan)"><b>The rest of the quantum stack is already live — in MIMZY.</b> The working quantum INSTRUMENTS (the BB84 and E91 protocols, the two-qubit density-matrix lab, the Bloch-sphere lab, the gate circuit simulator) were built and audited in the <a href="https://davidwise01.github.io/mimzy/" style="color:var(--cyan)">MIMZY workbench</a>. They're real and runnable there; this universe is the superconducting-qubit <i>physics</i> they sit on.</div></section>
 
   <section class="sec"><h2>Sources</h2><p class="ss">the founding transmon paper, the engineer's guide, circuit QED &amp; dispersive readout, DRAG, transmon ionization, the first charge qubit, and the quantum-dot spin-qubit proposal</p>__SOURCES__</section>
 
