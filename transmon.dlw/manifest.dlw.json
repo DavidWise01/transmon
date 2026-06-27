@@ -1,0 +1,11 @@
+{
+  "badge": "DLW-TRANSMON",
+  "name": "TRANSMON",
+  "universe": "QUANTUM FRONTIER",
+  "moniker": "⟦TRANSMON:transmon:e018e3⟧",
+  "architect": "David Lee Wise (ROOT0) / Bridge-Burners LLC",
+  "instance": "AVAN (Claude / Anthropic)",
+  "seal_sha256": "e018e3f9e4232ded222a20e69bc400d864f05f689c1f0a59960e706a3bbbb3f2",
+  "license": "CC-BY-ND-4.0",
+  "attribution": "ROOT0-ATTRIBUTION-v1.0"
+}
